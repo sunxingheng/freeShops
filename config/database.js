@@ -3,7 +3,7 @@ var pool = mysql.createPool({
     host: '139.199.198.173',
     user: 'root',
     password: '123456',
-    database: 'mysql',
+    database: 'freeShops',
     port: 3306
 });
 
