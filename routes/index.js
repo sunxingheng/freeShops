@@ -1,7 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var app = express();
-var db = require('../config/database')
+let express = require('express');
+let router = express.Router();
+let app = express();
+let db = require('../config/database');
+let sqlPool = require('../utils/sqlPool');
+// let sqlPools = new sqlPool.sqlPool();
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // console.log()
@@ -14,11 +17,12 @@ router.get('/', function(req, res, next) {
   //   return 'xxx'
   // })
 });
-router.get('/city', function (req, res) {
-  console.log(req.query)
+router.post('/login_by_pass', function (req, res) {
+  console.log(1,req.body,2,req.query)
+  console.log(sqlPool.arrToobj({a:1,b:2}))
   res.json({
     errno: 0,
-    data: req.query
+    data: req.body
   })
 })
 
