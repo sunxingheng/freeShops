@@ -28,6 +28,7 @@ var sql={
 
 /*数据库操作*/
 var userdo={
+    //新增/编辑用户
     add:function(req,res,next){
         var param_q= req.query || req.params;
         var param_b = req.body || req.params;
@@ -117,7 +118,6 @@ var userdo={
                 }else{
                     res.send(new resData(0));
                 }
-
             });
             conn.release();
         })
