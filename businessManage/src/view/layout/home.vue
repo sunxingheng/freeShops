@@ -1,68 +1,90 @@
 <template>
   <div class="home">
-    <el-container>
-      <el-aside width="92px">
-        <!--      <div class="title" >商家管理中心</div>-->
-        <asides></asides>
-      </el-aside>
-      <el-container class="mainContain">
-<!--        <el-header>Header</el-header>-->
-        <el-main>
-          <router-view></router-view>
-        </el-main>
-        <!--      <el-footer>Footer</el-footer>-->
-      </el-container>
-    </el-container>
+    <aside class="asideContain">
+      <asideLeft class="asideLeftTop" :param="params"></asideLeft>
+      <asideRight class="asideRightTop" v-if="params.showsTrans || params.activeIndex != 0"></asideRight>
+    </aside>
+    <main class="app_container" :class="{'unnarrow':params.activeIndex == 0}">
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
 <script>
-    import asides from "./asides";
-
+    import asideLeft from "./asideLeft";
+    import asideRight from "./asideRight"
+    import router from "@/router.js";
     export default {
         name: "home",
         data() {
             return {
-                params: {}
+                params: {
+                    activeIndex: 0,//当前菜单所在位置
+                    showsTrans: false
+                }
             }
         },
         components: {
-            asides,
+            asideLeft,
+            asideRight
         },
+        created() {
+            let _self = this;
+            _self.params.router = router.options.routes;
+        }
 
     }
 </script>
 
 <style scoped lang="less">
-  .el-container {
-    height: 100vh;
-    box-sizing: border-box;
-    background-color: #E9EEF3;
-    &.mainContain{
-      min-width: 500px;
-    }
-    .el-header {
-      background-color: #B3C0D1;
-      color: #333;
-      text-align: center;
-      line-height: 60px;
-    }
-    .el-main {
-      background-color: #fff;
-      color: #333;
-      text-align: center;
-      /*line-height: 160px;*/
-      padding: 0;
-      margin: 20px;
-
-    }
-
-    .el-aside {
+  .home {
+    .asideContain {
       background: #273543;
-      color: #333;
-      text-align: center;
-      color: #fff;
-      /*line-height: 200px;*/
+      transition: all .2s;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 92px;
+      font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft Yahei, STHeiti, SimSun, sans-serif;
+      z-index: 11;
+
+      .asideLeftTop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 92px;
+        background-color: #444;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .asideRightTop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 92px;
+        height: 100%;
+        width: 130px;
+        background-color: #fff;
+        border-right: 1px solid rgba(230,230,230,.5);
+      }
+
+    }
+
+    .app_container {
+      background: #f2f2f2;
+      width: auto;
+      margin-left: 224px;
+      padding-bottom: 50px;
+      min-width: 810px;
+      &.unnarrow {
+        margin-left: 92px;
+      }
     }
   }
 </style>

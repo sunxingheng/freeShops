@@ -7,7 +7,15 @@ import router from '../router'
 
 // const whiteList = ['/login0', '/login1', '/xinshangmeng', '/error', '/test', '/goodsDetail'] // 不重定向白名单
 
-// router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
+  if(to.path == '/') {
+      next({
+        path: '/dashboard'
+      })
+    }else{
+    next();
+  }
+})
 //
 //   document.title = router.options.engin[localStorage.getItem("limitLevel")].name;
 //   let loginStatus = Boolean(localStorage.getItem('loginStatus')) ? true : false; //store.state.user.status

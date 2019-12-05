@@ -14,36 +14,36 @@ export default new Router({
       },
 
 
-      {path: '/',name: '店铺',component: layout,iconCls: 'el-icon-s-shop',children: [
-          {path: '/goodsList',name: '移动App',component: () =>	import('@/view/shopManage/goodsList')	}
+      {path: '/',name: '店铺', fullName:"店铺管理", component: layout,iconCls: 'el-icon-s-shop',children: [
+          {path: '/editApp',name: '移动App',component: () =>	import('@/view/shopManage/editApp')	}
         ]
       },
 
-      {path: '/',name: '商品',component: layout,iconCls: 'el-icon-goods',children: [
+      {path: '/',name: '商品', fullName:"商品中心", component: layout,iconCls: 'el-icon-goods',children: [
           {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/goodsManage/goodsList')	}
         ]
       },
-
-      {path: '/',name: '库存',component: layout,iconCls: 'el-icon-school',children: [
-          {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
-        ]
-      },
-      {path: '/',name: '采购',component: layout,iconCls: 'el-icon-shopping-cart-full',children: [
-          {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
-        ]
-      },
-      {path: '/',name: '订单',component: layout,iconCls: 'el-icon-s-order',children: [
-          {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
-        ]
-      },
-      {path: '/',name: '客户',component: layout,iconCls: 'el-icon-s-order',children: [
-          {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
-        ]
-      },
-      {path: '/',name: '数据',component: layout,iconCls: 'el-icon-s-order',children: [
-          {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
-        ]
-      },
+      //
+      // {path: '/',name: '库存',component: layout,iconCls: 'el-icon-school',children: [
+      //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
+      //   ]
+      // },
+      // {path: '/',name: '采购',component: layout,iconCls: 'el-icon-shopping-cart-full',children: [
+      //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
+      //   ]
+      // },
+      // {path: '/',name: '订单',component: layout,iconCls: 'el-icon-s-order',children: [
+      //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
+      //   ]
+      // },
+      // {path: '/',name: '客户',component: layout,iconCls: 'el-icon-s-order',children: [
+      //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
+      //   ]
+      // },
+      // {path: '/',name: '数据',component: layout,iconCls: 'el-icon-s-order',children: [
+      //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
+      //   ]
+      // },
       // {path: '/',name: '资产',component: layout,iconCls: 'el-icon-s-order',children: [
       //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}
       //   ]
