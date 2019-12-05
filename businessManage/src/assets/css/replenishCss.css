@@ -1,0 +1,53 @@
+/*.el-table th{background:#8CC5FF !important;text-align: center; color: #fff; padding: 5px 0;}*/
+/*.el-table td, .el-table th{padding: 5px 0;}*/
+/*.el-input__inner {height:30px;line-height: 30px;}*/
+/*.el-cascader ,.el-form-item__label,.el-input,.el-form-item__content,.el-input__icon,.el-input__icon{line-height: 30px;}*/
+
+/*.el-button,.el-radio-button__inner{padding: 7px 20px;}*/
+
+/*.color-red{color: #f00;}*/
+/*.color-green{color: limegreen;}*/
+
+/*.el-table__row.isClose-row {background: rgba(245,247,250,1) ;}*/
+/*.point .el-form-item__label{width: 150px !important;}*/
+
+/*.el-loading-mask.is-fullscreen{*/
+/*	z-index: 2008;*/
+/*}*/
+
+/*.el-loading-mask {*/
+/*  position: absolute;*/
+/*  background-color: rgba(255, 255, 255, .9);*/
+/*  margin: 0;*/
+/*  top: 0;*/
+/*  right: 0;*/
+/*  bottom: 0;*/
+/*  left: 0;*/
+/*  transition: opacity .3s*/
+/*}*/
+
+/*.el-date-editor .el-range-separator{*/
+/*	    padding: 0 15px;*/
+/*	    line-height: 25px;*/
+/*}*/
+/*.el-date-editor .el-range__icon {*/
+/*    line-height: 25px;*/
+/*    }*/
+/*    */
+/*.el-date-editor .el-range__close-icon {*/
+/*    line-height: 25px;*/
+/*}*/
+
+/*.uploadFile .el-upload-dragger{*/
+/*  width: 600px;*/
+/*  height: 360px;*/
+/*}*/
+/*.uploadFile .el-upload-dragger i{*/
+/*  margin: 110px 0 16px;*/
+/*}*/
+
+
+.aside .el-menu-item.is-active{
+  background: #4091FF !important;
+  color: #fff  !important;
+}
