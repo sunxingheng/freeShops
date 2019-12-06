@@ -1,13 +1,8 @@
 <template>
-  <div class="goodsList">
-    <el-button type="primary" class="mb10">新增分类</el-button>
-    <el-button  class="mb10">商品导入</el-button>
+  <div class="category">
+    <el-button type="primary" class="mb10" @click="addAndEdit(0,'默认分类')">新增分类</el-button>
     <el-table :data="params.tableData" style="width: 100%">
-      <el-table-column prop="goodsName" label="商品名称"></el-table-column>
-      <el-table-column prop="goodsName" label="库存单位"></el-table-column>
-      <el-table-column prop="goodsName" label="商品分类"></el-table-column>
-      <el-table-column prop="goodsName" label="上架状态"></el-table-column>
-      <el-table-column prop="goodsName" label="创建时间"></el-table-column>
+      <el-table-column prop="categoryName" label="分类"></el-table-column>
       <el-table-column label="操作" fixed="right" width="180">
         <template slot-scope="scope">
           <el-button type="text" @click="addAndEdit(1,scope.row)">编辑</el-button>
@@ -21,33 +16,26 @@
 <script>
     import http from "@/utils/http.js";
     import urls from "@/utils/urls.js";
+
     export default {
-        name: "goodsList",
+        name: "category",
         data() {
             return {
                 params: {
-                    tableData: [{}],
-                    pageInfo:{
-                        total:'',
-                        pageSize:100,
-                        pageNum:1,
-
-                    }
+                    tableData: []
                 }
             }
         },
         methods: {
-            getGoodsList() {
+            getCategory() {
                 let _self = this;
-                let url = urls.GOODS_LIST;
+                let url = urls.CATEGORY_LIST;
                 let body = {
-                    shopId:_self.$store.state.manage.userInfo.shopId,
-                    pageSize:_self.params.pageInfo.pageSize,
-                    pageNum:_self.params.pageInfo.pageNum
+                    shopId:_self.$store.state.manage.userInfo.shopId
                 }
                 url = http.mixUrl(body,url);
                 http.ajax('get', url, body, function (res) {
-                    _self.params.tableData = res.body.data;
+                   _self.params.tableData = res.body.data;
                 }, function (res) {
 
                 })
@@ -100,14 +88,15 @@
             }
         },
         created() {
-            this.getGoodsList()
+            this.getCategory()
         }
     }
 </script>
 
-<style scoped lang="less">
-  .goodsList {
+<style lang="less" scoped>
+  .category {
     padding: 10px;
+
     .alignRight {
       padding: 0 20px;
     }

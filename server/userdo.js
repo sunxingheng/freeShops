@@ -1,22 +1,20 @@
 //数据逻辑处理
 let mysql=require("mysql");
 let result=require("./res"); //暂时无用
-var config = require('../config/config').config;
-var resData=require("./resdata");
-var message=require("./message");
-
-
+let config = require('../config/config').config;
+let resData=require("./resdata");
+let message=require("./message");
 
 /*启动连接池*/
 
-var pool=mysql.createPool(config);
+let pool=mysql.createPool(config);
 
-var poolFun=function(fun){
+let poolFun=function(fun){
     return  pool.getConnection(fun)
 };
 
 /*sql 查询语句*/
-var sql={
+let sql={
     add: 'INSERT INTO user(username,password,mobile) VALUES(?,?,?)',
     sele:'select * from user where username = ?',
     list:'select * from user  order by id desc',
@@ -27,13 +25,13 @@ var sql={
 };
 
 /*数据库操作*/
-var userdo={
+let userdo={
     //新增/编辑用户
     add:function(req,res,next){
-        var param_q= req.query || req.params;
-        var param_b = req.body || req.params;
-        var valArr=[];
-        var id=param_b.id;
+        let param_q= req.query || req.params;
+        let param_b = req.body || req.params;
+        let valArr=[];
+        let id=param_b.id;
         valArr.push(param_b.username);
         valArr.push(param_b.password);
         valArr.push(param_b.mobile);
@@ -104,7 +102,7 @@ var userdo={
 
     /*删除某ID用户*/
     del:function(req,res,next){
-        var id=(req.query||req.params).id;
+        let id=(req.query||req.params).id;
         if(!id){
             return false
         }
@@ -125,7 +123,7 @@ var userdo={
 
     /*查询某ID用户*/
     info:function(req,res,next){
-        var id=(req.query||req.params).id;
+        let id=(req.query||req.params).id;
         if(!id){
             return false
         }
@@ -147,7 +145,7 @@ var userdo={
 
     /*登录*/
     login:function(req,res,next){
-        var param_b = req.body || req.params;
+        let param_b = req.body || req.params;
         //req.assert('username', "用户名不能为空").notEmpty();
         //req.assert('passWord', "密码不能为空").notEmpty();
         if(!param_b.username||!param_b.password){
@@ -164,7 +162,7 @@ var userdo={
                     // res.send(new resData(1,req.cookies.COOKIES2));
                     // req.session.loginKey=req.cookies.COOKIES2; //登录成功设置一个session
                 }else{
-                    res.send(new message(1));
+                    res.send(new message(5));
                     req.session.loginKey=null;
                 }
 

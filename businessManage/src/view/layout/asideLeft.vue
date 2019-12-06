@@ -4,7 +4,7 @@
       <div class="logoImage"></div>
     </a>
     <div class="list" @mouseleave="mouseLeave">
-      <p class="li" :class="{'isActive':param.activeIndex == index}"
+      <p class="li" :class="{'isActive':catchData.activeIndex == index}"
          @click="handleChoose(index)"
          @mouseover="mouseOver(index)"
          v-for="(item,index) in param.router"
@@ -13,7 +13,7 @@
         {{item.name}}
       </p>
     </div>
-    <div class="listChild" v-if="param.activeIndex>0">
+    <div class="listChild" v-if="catchData.activeIndex>0">
       <p>
         {{param.activeIndex}}
       </p>
@@ -23,11 +23,15 @@
 
 <script>
 
+    import {mapGetters} from "vuex";
     export default {
         name: "asideLeft",
         data() {
-            return {
-            }
+            return {}
+        },
+        computed: {
+            //使用mapGetters导入isLogin
+            ...mapGetters(["catchData"])
         },
         props: {
             param: {
@@ -39,28 +43,26 @@
             mouseOver(index) {
                 console.log('yiru')
                 let _self = this;
-                if(index != 0){
+                if (index != 0) {
                     _self.param.showsTrans = true;
+                    _self.param.hoverIndex = index;
 
-                }else{
+                } else {
                     _self.param.showsTrans = false;
-
+                    _self.param.hoverIndex = _self.catchData.activeIndex;
                 }
-
-
-
             },
             mouseLeave() {
                 let _self = this;
                 _self.param.showsTrans = false;
-                console.log('yichu')
+                _self.param.hoverIndex = _self.catchData.activeIndex;
             },
             handleChoose(index) {
                 let _self = this;
-                if (index != _self.param.activeIndex) {
-                    let path = _self.param.router[index].children[0].path;
+                let path = _self.param.router[index].children[0].path;
+                if (this.$route.path != path) {
                     _self.$router.push(path)
-                    _self.param.activeIndex = index;
+                    _self.$store.commit("activeIndex", [index, 0]);
                 }
             },
             handleOpen(key, keyPath) {

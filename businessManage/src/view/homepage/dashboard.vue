@@ -1,12 +1,22 @@
 <template>
   <div class="dashboard">
-    dassssssssssssssssssssssssssssssssssssss
+    dashboard
   </div>
 </template>
 
 <script>
+    import { mapGetters } from "vuex";
     export default {
-        name: "dashboard"
+        name: "dashboard",
+        methods:{
+
+        },
+        computed: {
+            //使用mapGetters导入catchData
+            ...mapGetters(["catchData"])
+        },
+        created() {
+        }
     }
 </script>
 

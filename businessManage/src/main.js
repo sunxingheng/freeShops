@@ -5,6 +5,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App'
 import router from './router.js';
+import store from "./store";
+
 import routerBefore from './utils/beforeEach.js'
 import '@/assets/css/public.css';
 import '@/assets/css/rule.css';
@@ -22,6 +24,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

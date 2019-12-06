@@ -1,18 +1,27 @@
 import router from '../router'
-// import store from '../store'
+import store from '../store'
 // import Vue from 'vue'
 // import validation from '@/utils/validation'
 // import http from '@/utils/http'
 // import URL from '@/utils/url'
 
-// const whiteList = ['/login0', '/login1', '/xinshangmeng', '/error', '/test', '/goodsDetail'] // 不重定向白名单
+
+const whiteList = ['/login'] // 不重定向白名单
 
 router.beforeEach((to, from, next) => {
-  if(to.path == '/') {
-      next({
-        path: '/dashboard'
-      })
-    }else{
+  if (whiteList.find(function (str) { //判断白名单
+    return str == to.path
+  })) {
+    next()
+  } else if (!store.state.manage.isLogin) {//判断是否登陆
+    next({
+      path: '/login'
+    })
+  } else if (to.path == '/') { //判断默认值
+    next({
+      path: '/dashboard'
+    })
+  } else { //正常操作
     next();
   }
 })

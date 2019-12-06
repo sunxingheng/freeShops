@@ -2,34 +2,52 @@
   <div class="home">
     <aside class="asideContain">
       <asideLeft class="asideLeftTop" :param="params"></asideLeft>
-      <asideRight class="asideRightTop" v-if="params.showsTrans || params.activeIndex != 0"></asideRight>
+      <asideRight class="asideRightTop"
+                  :param="params"
+                  v-if="params.showsTrans || catchData.activeIndex != 0">
+      </asideRight>
     </aside>
-    <main class="app_container" :class="{'unnarrow':params.activeIndex == 0}">
-      <router-view></router-view>
+    <main class="app_container"
+          :class="{'unnarrow':catchData.activeIndex == 0}">
+      <modelPage>
+        <router-view slot="contain"></router-view>
+      </modelPage>
     </main>
   </div>
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
     import asideLeft from "./asideLeft";
     import asideRight from "./asideRight"
+    import modelPage from "./modelPage";
+
+
     import router from "@/router.js";
+
     export default {
         name: "home",
         data() {
             return {
                 params: {
                     activeIndex: 0,//当前菜单所在位置
-                    showsTrans: false
+                    showsTrans: false,
+                    hoverIndex: '',
                 }
             }
         },
+        computed: {
+            //使用mapGetters导入catchData
+            ...mapGetters(["catchData"])
+        },
         components: {
             asideLeft,
-            asideRight
+            asideRight,
+            modelPage
         },
         created() {
             let _self = this;
+            _self.params.hoverIndex = _self.catchData.activeIndex,
             _self.params.router = router.options.routes;
         }
 
@@ -38,6 +56,7 @@
 
 <style scoped lang="less">
   .home {
+    box-sizing: border-box;
     .asideContain {
       background: #273543;
       transition: all .2s;
@@ -71,7 +90,7 @@
         height: 100%;
         width: 130px;
         background-color: #fff;
-        border-right: 1px solid rgba(230,230,230,.5);
+        border-right: 1px solid rgba(230, 230, 230, .5);
       }
 
     }
@@ -79,9 +98,10 @@
     .app_container {
       background: #f2f2f2;
       width: auto;
-      margin-left: 224px;
-      padding-bottom: 50px;
+      margin-left: 222px;
+      /*padding-bottom: 50px;*/
       min-width: 810px;
+
       &.unnarrow {
         margin-left: 92px;
       }
