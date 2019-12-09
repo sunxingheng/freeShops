@@ -8,6 +8,7 @@
          @click="handleChoose(index)"
          :class="{'active':catchData.activeIndex == param.hoverIndex && catchData.secondIndex == index }"
          v-for="(item,index) in param.router[param.hoverIndex].children"
+         v-if="!item.hidden"
          :key="index">
         {{item.name}}
       </p>

@@ -1,6 +1,6 @@
 <template>
   <div class="goodsList">
-    <el-button type="primary" class="mb10">新增分类</el-button>
+    <el-button type="primary" class="mb10" @click="routerTo">新增分类</el-button>
     <el-button  class="mb10">商品导入</el-button>
     <el-table :data="params.tableData" style="width: 100%">
       <el-table-column prop="goodsName" label="商品名称"></el-table-column>
@@ -26,7 +26,7 @@
         data() {
             return {
                 params: {
-                    tableData: [{}],
+                    tableData: [],
                     pageInfo:{
                         total:'',
                         pageSize:100,
@@ -37,6 +37,10 @@
             }
         },
         methods: {
+            routerTo(){
+              let _self = this;
+              _self.$router.push('/goodsAdd')
+            },
             getGoodsList() {
                 let _self = this;
                 let url = urls.GOODS_LIST;

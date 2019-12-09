@@ -9,22 +9,21 @@ export default new Router({
 
 
       {path: '/',name: '概况',component: layout,iconCls: 'el-icon-data-board',children: [
-        {path: '/dashboard',name: '主页',component: () =>import('@/view/homepage/dashboard'),hidden: false}
+        {path: '/dashboard',name: '主页',component: () =>import('@/view/homepage/dashboard')}
         ]
       },
 
 
       {path: '/',name: '店铺', fullName:"店铺管理", component: layout,iconCls: 'el-icon-s-shop',children: [
-
-
-          {path: '/editApp',name: '移动App',component: () =>	import('@/view/shopManage/editApp')	}
+          {path: '/editApp',name: '移动App',component: () =>	import('@/view/shopManage/editApp')}
 
         ]
       },
 
       {path: '/',name: '商品', fullName:"商品中心", component: layout,iconCls: 'el-icon-goods',children: [
           {path: '/category',name: '商品分类',component: () =>	import('@/view/goodsManage/category')},
-          {path: '/goodsList',name: '商品库',component: () =>	import('@/view/goodsManage/goodsList')	}
+          {path: '/goodsList',name: '商品库',component: () =>	import('@/view/goodsManage/goodsList')},
+          {path: '/goodsAdd',name: '商品新增',component: () =>	import('@/view/goodsManage/goodsAdd'),hidden:true}
         ]
       },
       //

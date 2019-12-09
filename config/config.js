@@ -3,5 +3,8 @@ module.exports.config = {
     user: 'root',
     password: '123456',
     database: 'freeShops',
-    port: 3306
+    port: 3306,
+    domain:'http://localhost:8888/',
+    fileHost:'http://localhost:8888/fileServer/'
+
 };
