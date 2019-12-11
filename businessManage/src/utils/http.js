@@ -42,6 +42,39 @@ let httpService = new Vue({
       }
       console.log(str);
       return url+'?'+str;
+    },
+    //数据重置
+    resetValue(val){
+      console.log(val)
+      for(let key in val){
+        if(key instanceof Array){
+          val[key] = [];
+        }else if(typeof key == 'string'){
+          val[key] = '';
+
+        }
+      }
+      console.log(val)
+      return val
+    },
+    //信息发送
+    messageFunc(errorMessage, funcName) {
+      let _self = this;
+      if(funcName == "error") {
+        _self.$message.error(errorMessage);
+      } else if(funcName == "success") {
+        this.$message({
+          message: errorMessage,
+          type: 'success'
+        });
+      }else if(funcName == "warning"){
+        this.$message({
+          message: errorMessage,
+          type: 'warning'
+        });
+      }else{
+        this.$message(errorMessage);
+      }
     }
   },
 })

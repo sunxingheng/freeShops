@@ -23,5 +23,7 @@ export default {
   GOODS_EDIT: ENGIN.LOGIN + "/goods/edit",
   //删
   GOODS_DELETE: ENGIN.LOGIN + "/goods/delete",
+  //查
+  GOODS_GET: ENGIN.LOGIN + "/goods/detail",
 
 }

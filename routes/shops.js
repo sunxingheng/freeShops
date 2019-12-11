@@ -46,22 +46,24 @@ router.get('/goods/list',function (req,res,next) {
 
 //商品详情
 router.get('/goods/detail',function (req,res,next) {
-    res.send(new message(0))
+    shopdo.getGoodsDetail(req,res,next)
 })
 
 //商品新增
 router.post('/goods/add',function (req,res,next) {
-    res.send(new message(0))
+    shopdo.goodsAdd(req,res,next)
+    // res.send(new message(0))
 })
 
-
+//商品编辑
 router.put('/goods/edit',function (req,res,next) {
-    res.send(new message(0))
+    shopdo.goodsEdit(req,res,next)
+    // res.send(new message(0))
 })
 
-
+//商品删除
 router.delete('/goods/delete',function (req,res,next) {
-    res.send(new message(0))
+    shopdo.deleteGoods(req,res,next)
 })
 
 

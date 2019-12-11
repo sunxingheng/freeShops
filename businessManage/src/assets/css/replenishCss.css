@@ -62,6 +62,14 @@
 background-color: #F2F2F2;
   color: #666;
 }
+
+.w-e-toolbar .w-e-menu {
+  z-index: 1 !important;
+}
+
+.w-e-text-container {
+  z-index: 0 !important;
+}
 /*.el-table--enable-row-transition .el-table__body td{*/
 /*  text-align: center;*/
 /*}*/

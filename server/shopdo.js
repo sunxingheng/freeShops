@@ -1,40 +1,43 @@
 //数据逻辑处理
-let mysql=require("mysql");
-let result=require("./res"); //暂时无用
+let mysql = require("mysql");
+let result = require("./res"); //暂时无用
 let config = require('../config/config').config;
-let resData=require("./resdata");
-let message=require("./message");
+let resData = require("./resdata");
+let message = require("./message");
+let modelSql = require('./modelSql')
 
 /*启动连接池*/
 
-let pool=mysql.createPool(config);
+let pool = mysql.createPool(config);
 
-let poolFun=function(fun){
-    return  pool.getConnection(fun)
+let poolFun = function (fun) {
+    return pool.getConnection(fun)
 };
 
 /*sql 查询语句*/
-let sql={
+let sql = {
     add: 'INSERT INTO shop(shopName,shopPassword,shopMobile) VALUES(?,?,?)',
-    login:'select * from  shop where shopMobile=? and shopPassword=?',
-    getCategory:'select * from category where shopId=?',
-    addCategory:'INSERT INTO category(categoryName,remark ,shopId)  VALUES(?,?,?)',
-    editCategory:'UPDATE  category SET categoryName=?,remark=? WHERE shopId=? AND categoryId=?',
-    deleteCategory:'delete from category where categoryId=?',
-    getGoodsList:'select * from goods where shopId=? limit ?,?',
-    edit:'UPDATE  shop set shopName=? , shopPassword=?  , code=? where id=?',
-    sele:'select * from shop where shopName = ?'
-
+    login: 'select * from  shop where shopMobile=? and shopPassword=?',
+    getCategory: 'select * from category where shopId=?',
+    addCategory: 'INSERT INTO category(categoryName,remark ,shopId)  VALUES(?,?,?)',
+    editCategory: 'UPDATE  category SET categoryName=?,remark=? WHERE shopId=? AND categoryId=?',
+    deleteCategory: 'delete from category where categoryId=?',
+    getGoodsList: 'select category.categoryName , shop.shopName ,goods.* from goods inner join category on goods.categoryId = category.categoryId  inner join shop on goods.shopId = shop.shopId',
+    goodsAdd: 'INSERT INTO goods( goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus)  VALUES(?,?,?,?,?,?,?,?,?,?)',
+    
+    getGoodsDetail: 'select goodsId, goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus from goods where goodsId=?',
+    editGoods: 'UPDATE  goods SET goodsCode=? , goodsBarCode=? , goodsName=? , goodsPrice=? , categoryId=? , goodsDetails=?, unit=? , goodsImg=?  WHERE  goodsId=? AND shopId=? ',
+    deleteGoods: 'delete from goods where goodsId=?',
 };
 
 /*数据库操作*/
-let shopdo={
+let shopdo = {
     //新增/编辑用户
-    add:function(req,res,next){
-        let param_q= req.query || req.params;
+    add: function (req, res, next) {
+        let param_q = req.query || req.params;
         let param_b = req.body || req.params;
-        let valArr=[];
-        let id=param_b.id;
+        let valArr = [];
+        let id = param_b.id;
         valArr.push(param_b.shopName);
         valArr.push(param_b.shopPassword);
         valArr.push(param_b.shopMobile);
@@ -45,33 +48,33 @@ let shopdo={
         console.log(valArr);
         console.log('============获取请求数据end==========')
 
-        poolFun(function(err,conn){
-            if(err){
+        poolFun(function (err, conn) {
+            if (err) {
                 return false
             }
-            conn.query(sql.sele,param_b.shopName,function(e,r){
-                console.log(e,r)
-                if(r.length>0&&!id){
+            conn.query(sql.sele, param_b.shopName, function (e, r) {
+                console.log(e, r)
+                if (r.length > 0 && !id) {
                     res.send(new message(2))//已经存在
                     return false
-                }else if(r.length>0&&(r[0].id!==id)&&id){
+                } else if (r.length > 0 && (r[0].id !== id) && id) {
                     res.send(new message(3));//编辑但不存在
                     return false
                 }
                 //执行下一步操作
-                if(!id){
-                    if(!valArr[0] || !valArr[1] || !valArr[2]){
+                if (!id) {
+                    if (!valArr[0] || !valArr[1] || !valArr[2]) {
                         res.send(new message(4));
                         return false
                     }
                 }
-                conn.query(id?sql.edit:sql.add,id?valArr.concat(id):valArr,function(e,r){ //val选填
+                conn.query(id ? sql.edit : sql.add, id ? valArr.concat(id) : valArr, function (e, r) { //val选填
 
-                    if(r) {
+                    if (r) {
                         // return res.redirect('back'); //返回请求页面
                         // res.redirect("http://127.0.0.1:3000/");
                         res.send(new message(0))
-                    }else{
+                    } else {
                         res.json(new message(1))
                     }
                 });
@@ -86,22 +89,22 @@ let shopdo={
     },
 
     /*登录*/
-    login:function(req,res,next){
+    login: function (req, res, next) {
         let param_b = req.body || req.params;
-        if(!param_b.shopName||!param_b.shopPassword){
+        if (!param_b.shopName || !param_b.shopPassword) {
             res.send(new message(4));
             return false
         }
-        poolFun(function(err,conn){
-            if(err){
+        poolFun(function (err, conn) {
+            if (err) {
                 return false
             }
-            conn.query(sql.login,[param_b.shopMobile,param_b.shopPassword],function(e,r){
-                if(r.length>0){
-                    res.send(new message(0,'登陆成功',r[0]))
+            conn.query(sql.login, [param_b.shopMobile, param_b.shopPassword], function (e, r) {
+                if (r.length > 0) {
+                    res.send(new message(0, '登陆成功', r[0]))
                     // res.send(new resData(1,req.cookies.COOKIES2));
                     // req.session.loginKey=req.cookies.COOKIES2; //登录成功设置一个session
-                }else{
+                } else {
                     res.send(new message(5));
                     // req.session.loginKey=null;
                 }
@@ -113,117 +116,147 @@ let shopdo={
     },
 
     /*查询 全部*/
-    getCategory:function(req,res,next){
-        poolFun(function(err,conn){
-            if(err){
+    getCategory: function (req, res, next) {
+        poolFun(function (err, conn) {
+            if (err) {
                 return false
             }
-            let param_q= req.query || req.params;
-            conn.query(sql.getCategory,[param_q.shopId],function(e,r){
-                console.log(e,r)
-                if(r){
-                    res.send(new message(0,'',r));
-                }else{
-                    res.send(new message(1));
-                }
-
-            });
-            conn.release();
+            let param_q = req.query || req.params;
+            let params = [param_q.shopId];
+            let sqls = sql.getCategory;
+            modelSql.sqlState(sqls, params, res,function (data) {
+                res.send(new message(0,'',data));
+            })
         })
     },
 
-   /* 新增 分类*/
-    addCategory:function(req,res,next){
+    /* 新增 分类*/
+    addCategory: function (req, res, next) {
         let param_b = req.body || req.params;
-        if(!param_b.shopId || !param_b.categoryName){
+        if (!param_b.shopId || !param_b.categoryName) {
             res.send(new message(4));
             return false;
         }
-        poolFun(function (err,conn) {
-            if(err){
-                return false
-            }
-            let sqls = param_b.categoryId? sql.editCategory:sql.addCategory;
-            conn.query(sqls,[param_b.categoryName,param_b.remark,param_b.shopId ,param_b.categoryId],function(e,r){
-                if(r){
-                    res.send(new message(0));
-                }else{
-                    res.send(new message(1));
-                }
-            });
+        let sqls = sql.addCategory;
+        let params = [param_b.categoryName, param_b.remark, param_b.shopId, param_b.categoryId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0,'',data));
+            res.send(new message(0));
         })
     },
+
     /* 编辑 分类*/
-   editCategory:function(req,res,next){
+    editCategory: function (req, res, next) {
         let param_b = req.body || req.params;
-        if(!param_b.shopId || !param_b.categoryName){
+        if (!param_b.shopId || !param_b.categoryName) {
             res.send(new message(4));
             return false;
         }
-        poolFun(function (err,conn) {
-            if(err){
-                return false
-            }
-            conn.query(sql.editCategory,[param_b.categoryName,param_b.remark,param_b.shopId ,param_b.categoryId],function(e,r){
-                console.log('xxxxx',e,r)
-                if(r){
-                    res.send(new message(0));
-                }else{
-                    res.send(new message(1));
-                }
-            });
+        let sqls = sql.editCategory
+        let params = [param_b.categoryName, param_b.remark, param_b.shopId, param_b.categoryId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0));
         })
     },
 
     /*删除 分类*/
-    deleteCategory:function(req,res,next){
-        let categoryId=(req.query||req.params).categoryId;
-        if(!categoryId){
-            res.send( new message(6))
+    deleteCategory: function (req, res, next) {
+        let categoryId = (req.query || req.params).categoryId;
+        if (!categoryId) {
+            res.send(new message(6))
             return false
         }
-        poolFun(function(err,conn){
-            if(err){
-                return false
-            }
-            conn.query(sql.deleteCategory,[categoryId],function(e,r){
-                if(r){
-                    res.send(new message(0));
-                }else{
-                    res.send(new message(6));
-                }
-            });
-            conn.release();
+        let sqls = sql.deleteCategory
+        let params = [categoryId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0));
         })
     },
 
 
     /*查询商品库列表*/
-    getGoodsList:function(req,res,next){
+    getGoodsList: function (req, res, next) {
         let param_b = req.query || req.params || req.body;
-        console.log('aaaaaaaaaaaa',param_b)
-        if(!param_b.shopId){
+        console.log('aaaaaaaaaaaa', param_b)
+        if (!param_b.shopId) {
             return false;
         }
-        poolFun(function(err,conn){
-            if(err){
-                return false
-            }
-            console.log('xxxxxxxxxxx',[param_b.shopId*1,(param_b.pageNum-1)*param_b.pageSize,param_b.pageSize])
-            conn.query(sql.getGoodsList,[param_b.shopId*1,(param_b.pageNum-1)*param_b.pageSize,param_b.pageSize*1],function(e,r){
-                console.log('xxxxxxxxxxxxxxxxxxxxxxx',e,r)
-                if(r){
-                    res.send(new message(0,'',r));
-                }else{
-                    res.send(new message(1));
-                }
-            });
-            conn.release();
+        let sqls = sql.getGoodsList
+        let params = [param_b.shopId * 1, (param_b.pageNum - 1) * param_b.pageSize, param_b.pageSize * 1];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0,'',data));
         })
     },
 
+    //查询商品详情
+    getGoodsDetail: function (req, res, next) {
+        let param_b = req.query || req.params || req.body;
+        if (!param_b.goodsId) {
+            return false;
+        }
+        let sqls = sql.getGoodsDetail
+        let params = [param_b.goodsId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0,'',data));
+        })
+    },
 
+    //新增
+    goodsAdd: function (req, res, next) {
+        let param_b = req.body || req.params || req.params;
+        let must = [param_b.goodsCode, param_b.goodsBarCode, param_b.goodsName, param_b.goodsPrice, param_b.categoryId, param_b.shopId, param_b.unit];
+        for (let i in must) {
+            if (!must[i]) {
+                res.send(new message(4));
+                return false;
+            }
+        }
+        let sqls = sql.goodsAdd;
+        //初始化商品状态
+        param_b.putawayStatus = '0';
+        //占位符固定化
+        let pla =['goodsCode', 'goodsBarCode', 'goodsName','goodsPrice', 'categoryId', 'goodsDetails','shopId', 'unit', 'goodsImg','putawayStatus'];
+        let params = modelSql.placeholder(pla, param_b);
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0));
+        })
+    },
+
+    //编辑
+    goodsEdit: function (req, res, next) {
+        let param_b = req.body || req.params || req.params;
+        let must = [param_b.goodsCode, param_b.goodsBarCode, param_b.goodsName, param_b.goodsPrice, param_b.categoryId, param_b.shopId, param_b.unit];
+        for (let i in must) {
+            if (!must[i]) {
+                res.send(new message(4));
+                return false;
+            }
+        }
+        let pla = ['goodsCode', 'goodsBarCode', 'goodsName', 'goodsPrice', 'categoryId', 'goodsDetails', 'unit', 'goodsImg', 'goodsId', 'shopId']
+        let params = modelSql.placeholder(pla, param_b);
+        let sqls = sql.editGoods;
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',JSON.stringify(params))
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0));
+        })
+
+    },
+
+
+    //删除
+    deleteGoods:function (req,res,next) {
+        let goodsId = (req.query || req.params).goodsId;
+        if (!goodsId) {
+            res.send(new message(6))
+            return false
+        }
+        let sqls = sql.deleteGoods
+        let params = [goodsId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+            res.send(new message(0));
+        })
+    }
 };
 
-module.exports=shopdo;
+module.exports = shopdo;
 

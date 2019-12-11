@@ -10,7 +10,5 @@ module.exports = {
       target: 'http://192.168.1.100:8888',
       changeOrigin: true,
     },
-
-
 	}
 }

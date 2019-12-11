@@ -32,19 +32,16 @@ module.exports = {
         form.uploadDir = './public/' + req.params.folder;
         console.log('xxxxxxxxxxxx', form.uploadDir)
         //设置文件大小限制
-        form.maxFilesSize = 10 * 1024 * 1024;
+        form.maxFilesSize = 200 * 1024 * 1024;
         // form.maxFields = 1000;   //设置所有文件的大小总和//上传后处理
 
         _self.mkdirFolder(form.uploadDir, true, res, function () {
             form.parse(req, function (err, fields, files) {
                 let filesTemp = JSON.stringify(files, null, 2);
                 if (err) {
-                    // response.writeHead(404, 'not found')
-                    // res.send(new message(1));
-                    // res.end();
-                    res.writeHeader(404,{
-                        'content-type' : 'application/json'
-                    });
+                    response.writeHead(404, 'not found')
+                    res.send(new message(1));
+                    res.end();
                     res.send(new message(1));
                     res.end();
                 } else {

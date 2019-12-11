@@ -21,7 +21,8 @@ export default {
     }
   },
   getters: {
-    catchData:(state) => state.catchData
+    catchData:(state) => state.catchData,
+    userInfo:(state) => state.userInfo
   },
   actions: {}
 }
