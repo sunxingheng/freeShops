@@ -3,7 +3,7 @@ let mysql = require("mysql");
 let result = require("./res"); //暂时无用
 let config = require('../config/config').config;
 let resData = require("./resdata");
-let message = require("./message");
+let message = require("../utils/message");
 let modelSql = require('./modelSql')
 
 /*启动连接池*/
@@ -24,7 +24,7 @@ let sql = {
     deleteCategory: 'delete from category where categoryId=?',
     getGoodsList: 'select category.categoryName , shop.shopName ,goods.* from goods inner join category on goods.categoryId = category.categoryId  inner join shop on goods.shopId = shop.shopId',
     goodsAdd: 'INSERT INTO goods( goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus)  VALUES(?,?,?,?,?,?,?,?,?,?)',
-    
+    putawayForGoods:'INSERT INTO snapshoot SELECT * FROM goods WHERE goodsId=?',
     getGoodsDetail: 'select goodsId, goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus from goods where goodsId=?',
     editGoods: 'UPDATE  goods SET goodsCode=? , goodsBarCode=? , goodsName=? , goodsPrice=? , categoryId=? , goodsDetails=?, unit=? , goodsImg=?  WHERE  goodsId=? AND shopId=? ',
     deleteGoods: 'delete from goods where goodsId=?',
@@ -213,7 +213,7 @@ let shopdo = {
         }
         let sqls = sql.goodsAdd;
         //初始化商品状态
-        param_b.putawayStatus = '0';
+        param_b.putawayStatus = 0;
         //占位符固定化
         let pla =['goodsCode', 'goodsBarCode', 'goodsName','goodsPrice', 'categoryId', 'goodsDetails','shopId', 'unit', 'goodsImg','putawayStatus'];
         let params = modelSql.placeholder(pla, param_b);
@@ -221,6 +221,7 @@ let shopdo = {
             res.send(new message(0));
         })
     },
+
 
     //编辑
     goodsEdit: function (req, res, next) {
@@ -242,6 +243,19 @@ let shopdo = {
 
     },
 
+    putawayForGoods:function(req,res,next){
+        let goodsId = (req.query || req.params).goodsId;
+        if (!goodsId) {
+            res.send(new message(6))
+            return false
+        }
+        let sqls = sql.putawayForGoods;
+        let params = [goodsId];
+        modelSql.sqlState(sqls, params, res,function (data) {
+
+            res.send(new message(0));
+        })
+    },
 
     //删除
     deleteGoods:function (req,res,next) {

@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let shopdo = require('../server/shopdo');
-let message=require("../server/message");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

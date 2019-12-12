@@ -1,7 +1,7 @@
 var fs = require("fs");
 var multiparty = require('multiparty');
 var util = require('util');
-let message = require("../server/message");
+let message = require("./message");
 let config = require("../config/config");
 let common = require("../utils/common");
 

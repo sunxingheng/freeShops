@@ -1,6 +1,6 @@
 let mysql=require("mysql");
 let config = require('../config/config').config;
-let message=require("./message");
+let message=require("../utils/message");
 
 
 let pool=mysql.createPool(config);

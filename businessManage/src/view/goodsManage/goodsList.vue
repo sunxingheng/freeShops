@@ -4,20 +4,20 @@
     <el-button  class="mb10">商品导入</el-button>
     <el-table :data="params.tableData" style="width: 100%">
       <el-table-column prop="goodsName" label="商品名称"></el-table-column>
-      <el-table-column prop="goodsPrice" label="商品价格">
+      <el-table-column prop="goodsPrice" label="商品价格" width="100px">
         <template slot-scope="scope">
           {{scope.row.goodsPrice+ '元'}}
         </template>
       </el-table-column>
-      <el-table-column prop="unit" label="库存单位"></el-table-column>
-      <el-table-column prop="categoryName" label="商品分类">
+      <el-table-column prop="unit" label="库存单位" width="100px"></el-table-column>
+      <el-table-column prop="categoryName" label="商品分类" width="100px">
         <template slot-scope="scope">
           {{scope.row.categoryName || '分类不存在'}}
         </template>
       </el-table-column>
-      <el-table-column prop="putawayStatus" label="上架状态">
+      <el-table-column prop="putawayStatus" label="上架状态" width="100px">
         <template slot-scope="scope">
-          {{scope.row.putawayStatus?'已上架': '未上架'}}
+          {{scope.row.putawayStatus == 0?'未上架': scope.row.putawayStatus == 1?'已上架': scope.row.putawayStatus == 2?'已下架':'未知'}}
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="创建时间"></el-table-column>
@@ -25,6 +25,8 @@
         <template slot-scope="scope">
           <el-button type="text"@click="routerTo('/goodsAdd?type=1&id='+scope.row.goodsId)">编辑</el-button>
           <el-button type="text" @click="deleteCategory(scope.row)">删除</el-button>
+          <el-button type="text" v-if="scope.row.putawayStatus != 1" @click="deleteCategory(scope.row)">上架</el-button>
+          <el-button type="text"  v-if="scope.row.putawayStatus == 1" @click="deleteCategory(scope.row)">下架</el-button>
         </template>
       </el-table-column>
     </el-table>
