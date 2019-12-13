@@ -33,6 +33,7 @@ npm i apidoc -g
 //更新接口文档
 
  apidoc -i routes/ -o public/apidoc/
+
  ```
 
 
