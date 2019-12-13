@@ -1,4 +1,17 @@
+#files
 node_modules
 businessManage/node_modules
 businessManage/dist
 public/files
+apidoc
+
+#local env files
+
+#log files
+
+target/
+*.iml
+.idea/
+
+
+

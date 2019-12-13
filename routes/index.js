@@ -6,6 +6,26 @@ let sqlPool = require('../utils/sqlPool');
 let fs = require('fs');
 
 /* GET home page. */
+/**
+ * @api {post} / 用户登录
+ * @apiDescription 首页
+ * @apiName home-page
+ * @apiGroup root
+ * @apiParam {string} loginName 用户名
+ * @apiParam {string} loginPass 密码
+ * @apiSuccess {html} result 顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *      "success" : "true",
+ *      "result" : {
+ *          "name" : "loginName",
+ *          "password" : "loginPass"
+ *      }
+ *  }
+ * @apiSampleRequest http://localhost:3000/api/user/submit-login
+ * @apiVersion 1.0.1
+ */
+
 router.get('/', function(req, res, next) {
   // console.log()
   db.query("select * from user ",function(err,vals,fields){

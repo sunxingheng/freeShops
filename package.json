@@ -18,5 +18,12 @@
     "mysql": "^2.17.1",
     "promise-mysql": "^4.1.1",
     "util": "^0.12.1"
+  },
+  "devDependencies": {
+    "grunt-apidoc": "^0.11.0"
+  },
+  "apidoc": {
+    "title": "接口文档",
+    "url": "http://localhost:8888"
   }
 }
