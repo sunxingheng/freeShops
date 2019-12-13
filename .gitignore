@@ -1,9 +1,9 @@
-#files
-node_modules
-businessManage/node_modules
-businessManage/dist
-public/files
-apidoc
+### webpack ###
+node_modules/
+businessManage/node_modules/
+businessManage/dist/*
+public/files/*
+public/apidoc/*
 
 #local env files
 
