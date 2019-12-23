@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-let userdo = require('../server/userdo');
+let userdo = require('./userdo');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

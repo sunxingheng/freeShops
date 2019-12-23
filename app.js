@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/indexRouter');
 // var usersRouter = require('./routes/users');
-var shopsRouter = require('./routes/shops');
-var fileServer = require('./routes/fileServer');
+var wx_manage = require('./routes/wx_manage/wx_manage');
+var fileServer = require('./routes/fileServer/fileServer');
 
 var app = express();
 
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-app.use('/shops', shopsRouter);
+app.use('/wx_manage', wx_manage);
 app.use('/fileServer',fileServer);
 app.use('/apidoc',express.static('apidoc'));
 

@@ -26,6 +26,13 @@ export default new Router({
           {path: '/goodsAdd',name: '商品新增',component: () =>	import('@/view/goodsManage/goodsAdd'),hidden:true}
         ]
       },
+
+      {path: '/',name: '新闻', fullName:"新闻中心", component: layout,iconCls: 'el-icon-goods',children: [
+          {path: '/newsCategory',name: '新闻分类',component: () =>	import('@/view/wxManage/newsCategory')},
+          {path: '/newsList',name: '新闻库',component: () =>	import('@/view/wxManage/newsList')},
+          {path: '/newsAdd',name: '新闻新增',component: () =>	import('@/view/wxManage/newsAdd'),hidden:true}
+        ]
+      },
       //
       // {path: '/',name: '库存',component: layout,iconCls: 'el-icon-school',children: [
       //     {path: '/goodsList',name: '商品列表',component: () =>	import('@/view/repertoryManage/repertoryList')	}

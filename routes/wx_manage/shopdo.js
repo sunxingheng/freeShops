@@ -1,10 +1,10 @@
 //数据逻辑处理
 let mysql = require("mysql");
-let result = require("./res"); //暂时无用
-let config = require('../config/config').config;
-let resData = require("./resdata");
-let message = require("../utils/message");
-let modelSql = require('./modelSql')
+let result = require("../../utils/res"); //暂时无用
+let config = require('../../config/config').config;
+let resData = require("../../utils/resdata");
+let message = require("../../utils/message");
+let modelSql = require('../../utils/modelSql')
 
 /*启动连接池*/
 
@@ -16,18 +16,18 @@ let poolFun = function (fun) {
 
 /*sql 查询语句*/
 let sql = {
-    add: 'INSERT INTO shop(shopName,shopPassword,shopMobile) VALUES(?,?,?)',
-    login: 'select * from  shop where shopMobile=? and shopPassword=?',
-    getCategory: 'select * from category where shopId=?',
-    addCategory: 'INSERT INTO category(categoryName,remark ,shopId)  VALUES(?,?,?)',
-    editCategory: 'UPDATE  category SET categoryName=?,remark=? WHERE shopId=? AND categoryId=?',
-    deleteCategory: 'delete from category where categoryId=?',
-    getGoodsList: 'select category.categoryName , shop.shopName ,goods.* from goods inner join category on goods.categoryId = category.categoryId  inner join shop on goods.shopId = shop.shopId',
-    goodsAdd: 'INSERT INTO goods( goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus)  VALUES(?,?,?,?,?,?,?,?,?,?)',
-    putawayForGoods:'INSERT INTO snapshoot SELECT * FROM goods WHERE goodsId=?',
-    getGoodsDetail: 'select goodsId, goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus from goods where goodsId=?',
-    editGoods: 'UPDATE  goods SET goodsCode=? , goodsBarCode=? , goodsName=? , goodsPrice=? , categoryId=? , goodsDetails=?, unit=? , goodsImg=?  WHERE  goodsId=? AND shopId=? ',
-    deleteGoods: 'delete from goods where goodsId=?',
+    add: 'INSERT INTO manage_user(shopName,shopPassword,shopMobile) VALUES(?,?,?)',
+    login: 'select * from  manage_user where shopMobile=? and shopPassword=?',
+    getCategory: 'select * from center_category where shopId=?',
+    addCategory: 'INSERT INTO center_category(categoryName,remark ,shopId)  VALUES(?,?,?)',
+    editCategory: 'UPDATE  center_category SET categoryName=?,remark=? WHERE shopId=? AND categoryId=?',
+    deleteCategory: 'delete from center_category where categoryId=?',
+    getGoodsList: 'select center_category.categoryName , manage_user.shopName ,center_goods.* from center_goods inner join center_category on center_goods.categoryId = center_category.categoryId  inner join manage_user on center_goods.shopId = manage_user.shopId',
+    goodsAdd: 'INSERT INTO center_goods( goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus)  VALUES(?,?,?,?,?,?,?,?,?,?)',
+    putawayForGoods:'INSERT INTO center_snapshoot SELECT * FROM center_goods WHERE goodsId=?',
+    getGoodsDetail: 'select goodsId, goodsCode, goodsBarCode, goodsName,goodsPrice, categoryId, goodsDetails, shopId, unit, goodsImg,putawayStatus from center_goods where goodsId=?',
+    editGoods: 'UPDATE  center_goods SET goodsCode=? , goodsBarCode=? , goodsName=? , goodsPrice=? , categoryId=? , goodsDetails=?, unit=? , goodsImg=?  WHERE  goodsId=? AND shopId=? ',
+    deleteGoods: 'delete from center_goods where goodsId=?',
 };
 
 /*数据库操作*/

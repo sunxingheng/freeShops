@@ -2,8 +2,21 @@
   "name": "freeshops",
   "version": "0.0.0",
   "private": true,
+  "bin": "app.js",
+  "pkg": {
+    "scripts": [
+      "build/**/*.js"
+    ],
+    "assets": [
+      "dist/**/*"
+    ]
+  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "pm2": "pm2 start pm2.json",
+    "pkgmac": "pkg . -t node8-macos-x64 -o app",
+    "pkgwin": "pkg . -t node8-win-x64 -o app",
+    "pkg": "pkg . -t node10-win-x64 -o app"
   },
   "dependencies": {
     "bluebird": "^3.7.2",

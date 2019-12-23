@@ -1,14 +1,15 @@
 let express = require('express');
 let router = express.Router();
-let shopdo = require('../server/shopdo');
-
+let shopdo = require('./shopdo');
+let newsdo = require('./newsdo');
+let message = require("../../utils/message");
 /* GET users listing. */
 
 /**
  * @api {post} / 用户登录
  * @apiDescription 首页
  * @apiName home-page
- * @apiGroup shop
+ * @apiGroup manage
  * @apiParam {string} loginName 用户名
  * @apiParam {string} loginPass 密码
  * @apiSuccess {html} result 顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶
@@ -80,12 +81,65 @@ router.post('/goods/add',function (req,res,next) {
 //商品编辑
 router.put('/goods/edit',function (req,res,next) {
     shopdo.goodsEdit(req,res,next)
-    // res.send(new message(0))
 })
+
 
 //商品删除
 router.delete('/goods/delete',function (req,res,next) {
     shopdo.deleteGoods(req,res,next)
+})
+
+
+
+
+// ----------------------------------------------------------------
+
+//新闻分类列表
+router.get('/manage/news/category/list',function (req,res,next) {
+	// console.log('xxxxxxx',new message(0))
+	// res.send(new message(0))
+    newsdo.news_category_list(req,res,next)
+})
+//新闻分类新增
+router.post('/manage/news/category/add',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsAdd(req,res,next)
+})
+//新闻分类删除
+router.delete('/manage/news/category/del/:id',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsList(req,res,next)
+})
+//新闻分类修改
+router.post('/manage/news/categorys/eit/:id',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsAdd(req,res,next)
+})
+
+//新闻列表
+router.get('/manage/news/list',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsList(req,res,next)
+})
+//新闻新增
+router.post('/manage/news/add',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsAdd(req,res,next)
+})
+//新闻删除
+router.delete('/manage/news/del/:id',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsList(req,res,next)
+})
+//新闻修改
+router.post('/manage/news/eit/:id',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsAdd(req,res,next)
+})
+
+router.get('/manage/news/detail',function (req,res,next) {
+	res.send(new message(0))
+    // newsdo.newsAdd(req,res,next)
 })
 
 

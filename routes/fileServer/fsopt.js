@@ -1,9 +1,9 @@
 var fs = require("fs");
 var multiparty = require('multiparty');
 var util = require('util');
-let message = require("./message");
-let config = require("../config/config");
-let common = require("../utils/common");
+let message = require("../../utils/message");
+let config = require("../../config/config");
+let common = require("../../utils/common");
 
 module.exports = {
     //创建目录/递归创建目录

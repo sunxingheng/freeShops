@@ -1,8 +1,8 @@
 let express = require('express');
 let router = express.Router();
 let app = express();
-let db = require('../config/database');
-let sqlPool = require('../utils/sqlPool');
+let db = require('../../config/database');
+let sqlPool = require('../../utils/sqlPool');
 let fs = require('fs');
 
 /* GET home page. */

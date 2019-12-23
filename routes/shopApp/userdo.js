@@ -1,9 +1,9 @@
 //数据逻辑处理
 let mysql=require("mysql");
-let result=require("./res"); //暂时无用
-let config = require('../config/config').config;
-let resData=require("./resdata");
-let message=require("../utils/message");
+let result=require("../../utils/res"); //暂时无用
+let config = require('../../config/config').config;
+let resData=require("../../utils/resdata");
+let message=require("../../utils/message");
 
 /*启动连接池*/
 

@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 var fs = require('fs');
-var fsopt = require('../utils/fsopt')
+var fsopt = require('./fsopt')
 
 let publicPath = '/image/'
 

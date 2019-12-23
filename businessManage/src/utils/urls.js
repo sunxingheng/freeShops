@@ -1,5 +1,5 @@
 let ENGIN = {
-  LOGIN: "/shops",
+  LOGIN: "/wx_manage",
   SCORCE: "/api/ec_opc",
 }
 export default {
@@ -25,5 +25,24 @@ export default {
   GOODS_DELETE: ENGIN.LOGIN + "/goods/delete",
   //查
   GOODS_GET: ENGIN.LOGIN + "/goods/detail",
+  
+  //新闻分类列表
+  NEWS_CATEGORY_LIST: ENGIN.LOGIN + "/manage/news/category/list",
+  //新闻分类新增
+  NEWS_CATEGORY_ADD: ENGIN.LOGIN + "/manage/news/category/add",
+  //新闻分类编辑
+  NEWS_CATEGORY_EDIT: ENGIN.LOGIN + "/manage/news/categorys/eit/{id}",
+  //新闻分类删除
+  NEWS_CATEGORY_DELETE: ENGIN.LOGIN + "/manage/news/category/del/{id}",
+  //新闻库列表
+  NEWS_GOODS_LIST: ENGIN.LOGIN + "/manage/news/list",
+  //增
+  NEWS_GOODS_ADD: ENGIN.LOGIN + "/manage/news/add",
+  //改
+  NEWS_GOODS_EDIT: ENGIN.LOGIN + "/manage/news/eit/:id",
+  //删
+  NEWS_GOODS_DELETE: ENGIN.LOGIN + "/manage/news/del/:id",
+  //查
+  NEWS_GOODS_GET: ENGIN.LOGIN + "/manage/news/detail",
 
 }
