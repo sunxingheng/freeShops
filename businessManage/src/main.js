@@ -4,6 +4,8 @@ import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App'
+import './utils/mock'
+//此部分引入的是我们所编写的mockjs文档用来拦截请求
 import router from './router.js';
 import store from "./store";
 

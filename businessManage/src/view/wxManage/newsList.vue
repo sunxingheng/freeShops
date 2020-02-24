@@ -63,14 +63,16 @@
             },
             getGoodsList() {
                 let _self = this;
-                let url = urls.NEWS_LIST;
+                let url = urls.NEWS_GOODS_LIST;
                 let body = {
                     shopId:_self.userInfo.shopId,
                     pageSize:_self.params.pageInfo.pageSize,
                     pageNum:_self.params.pageInfo.pageNum
                 }
                 url = http.mixUrl(body,url);
+
                 http.ajax('get', url, body, function (res) {
+                    console.log(urls.NEWS_GOODS_LIST)
                     _self.params.tableData = res.body.data || [];
                 }, function (res) {
 
